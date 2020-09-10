@@ -29,13 +29,28 @@ public class Server {
         public ServerHandler(Socket socket) throws IOException {
             this.socket = socket;
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            output = new PrintWriter(socket.getOutputStream());
+            output = new PrintWriter(socket.getOutputStream(), true);
             System.out.println("Client accepted");
         }
 
         @Override
         public void run() {
+            try {
+                printMessage();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
+        private void printMessage() throws IOException {
+            String message;
+            while ((message = readMessage()) != null) {
+                System.out.println(message);
+            }
+        }
+
+        private String readMessage() throws IOException {
+            return input.readLine();
         }
     }
 }
