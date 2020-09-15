@@ -39,9 +39,16 @@ public class Server {
         @Override
         public void run() {
             try {
-                printMessage();
+                sendMessageToAll();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        }
+
+        private void sendMessageToAll() throws IOException {
+            String message;
+            while ((message = getUserInput()) != null) {
+                printMessage(message);
             }
         }
 
