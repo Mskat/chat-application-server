@@ -45,14 +45,14 @@ public class Server {
             }
         }
 
+        private String getUserInput() throws IOException {
+            return input.readLine();
+        }
+
         private void printMessage(String message) {
             for (PrintWriter participant : chatParticipants.getChatParticipants()) {
                 participant.println(message);
             }
-        }
-
-        private String readMessage() throws IOException {
-            return input.readLine();
         }
     }
 }
