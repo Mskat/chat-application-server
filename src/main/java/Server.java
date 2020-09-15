@@ -13,14 +13,18 @@ public class Server {
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
             System.out.println("Server is waiting for connection");
             while (true) {
-                Socket socket = serverSocket.accept();
-                pool.execute(new ServerHandler(socket));
+                connectToClientSocket(serverSocket);
             }
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             pool.shutdown();
         }
+    }
+
+    private void connectToClientSocket(ServerSocket serverSocket) throws IOException {
+        Socket socket = serverSocket.accept();
+        pool.execute(new ServerHandler(socket));
     }
 
     class ServerHandler implements Runnable {
