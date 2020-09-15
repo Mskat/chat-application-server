@@ -41,7 +41,7 @@ public class Server {
             try {
                 sendMessageToAll();
             } catch (IOException e) {
-                e.printStackTrace();
+                printDisconnectedMessage();
             }
         }
 
@@ -60,6 +60,10 @@ public class Server {
             for (PrintWriter participant : chatParticipants.getChatParticipants()) {
                 participant.println(message);
             }
+        }
+
+        private void printDisconnectedMessage() {
+            System.out.println("Client disconnected: " + socket);
         }
     }
 }
