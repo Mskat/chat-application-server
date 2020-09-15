@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 
 public class Server {
     private ExecutorService pool = null;
-    private ChatParticipant chatParticipant = new ChatParticipant();
+    private ChatParticipant chatParticipants = new ChatParticipant();
 
     public void startServer(int portNumber, int maxNumberOfClients) {
         pool = Executors.newFixedThreadPool(maxNumberOfClients);
@@ -45,12 +45,9 @@ public class Server {
             }
         }
 
-        private void printMessage() throws IOException {
-            String message;
-            while ((message = input.readLine()) != null) {
-                for (PrintWriter participant : chatParticipants.getChatParticipants()) {
-                    participant.println(message);
-                }
+        private void printMessage(String message) {
+            for (PrintWriter participant : chatParticipants.getChatParticipants()) {
+                participant.println(message);
             }
         }
 
