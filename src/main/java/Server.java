@@ -5,9 +5,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server {
+    private ExecutorService pool = null;
+    private ChatParticipant chatParticipant = new ChatParticipant();
 
     public void startServer(int portNumber, int maxNumberOfClients) {
-        ExecutorService pool = Executors.newFixedThreadPool(maxNumberOfClients);
+        pool = Executors.newFixedThreadPool(maxNumberOfClients);
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
             System.out.println("Server is waiting for connection");
             while (true) {
@@ -31,6 +33,7 @@ public class Server {
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new PrintWriter(socket.getOutputStream(), true);
             System.out.println("Client accepted");
+            chatParticipants.addParticipant(output);
         }
 
         @Override
@@ -44,8 +47,10 @@ public class Server {
 
         private void printMessage() throws IOException {
             String message;
-            while ((message = readMessage()) != null) {
-                System.out.println(message);
+            while ((message = input.readLine()) != null) {
+                for (PrintWriter participant : chatParticipants.getChatParticipants()) {
+                    participant.println(message);
+                }
             }
         }
 
