@@ -23,7 +23,7 @@ public class Server {
     }
 
     private void printWaitingForConnectionMessage() {
-        System.out.println("Server is waiting for connection");
+        System.out.println("Server is waiting for connection...");
     }
 
     private void connectToClientSocket(ServerSocket serverSocket) throws IOException {
@@ -40,7 +40,7 @@ public class Server {
             this.socket = socket;
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             output = new PrintWriter(socket.getOutputStream(), true);
-            System.out.println("Client accepted");
+            System.out.println("Client accepted: " + socket);
             chatParticipants.addParticipant(output);
         }
 
