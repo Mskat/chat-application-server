@@ -11,7 +11,7 @@ public class Server {
     public void startServer(int portNumber, int maxNumberOfClients) {
         pool = Executors.newFixedThreadPool(maxNumberOfClients);
         try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
-            System.out.println("Server is waiting for connection");
+            printWaitingForConnectionMessage();
             while (true) {
                 connectToClientSocket(serverSocket);
             }
@@ -20,6 +20,10 @@ public class Server {
         } finally {
             pool.shutdown();
         }
+    }
+
+    private void printWaitingForConnectionMessage() {
+        System.out.println("Server is waiting for connection");
     }
 
     private void connectToClientSocket(ServerSocket serverSocket) throws IOException {
