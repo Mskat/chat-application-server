@@ -16,7 +16,7 @@ public class Server {
                 connectToClientSocket(serverSocket);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            serverError(e);
         } finally {
             pool.shutdown();
         }
@@ -29,6 +29,10 @@ public class Server {
     private void connectToClientSocket(ServerSocket serverSocket) throws IOException {
         Socket socket = serverSocket.accept();
         pool.execute(new ServerHandler(socket));
+    }
+
+    private void serverError(IOException e) {
+        System.out.println("Error in Server: " + e.getMessage());
     }
 
     class ServerHandler implements Runnable {
@@ -49,6 +53,8 @@ public class Server {
             try {
                 sendMessageToAll();
             } catch (IOException e) {
+                clientLeftChat(e);
+            } finally {
                 printDisconnectedMessage();
             }
         }
@@ -68,6 +74,10 @@ public class Server {
             for (PrintWriter participant : chatParticipants.getChatParticipants()) {
                 participant.println(message);
             }
+        }
+
+        private void clientLeftChat(IOException e) {
+            System.out.println("Client's socket has been closed. " + e.getMessage());
         }
 
         private void printDisconnectedMessage() {
