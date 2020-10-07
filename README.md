@@ -1,1 +1,1 @@
-# chat-application-server
+# Chat Application Server
