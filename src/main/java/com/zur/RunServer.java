@@ -1,3 +1,7 @@
+package com.zur;
+
+import com.zur.server.Server;
+
 public class RunServer {
     private final static int portNumber = 5000;
     private final static int maxNumberOfClients = 10;
