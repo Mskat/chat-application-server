@@ -1,3 +1,5 @@
+package com.zur.server;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -23,7 +25,7 @@ public class Server {
     }
 
     private void printWaitingForConnectionMessage() {
-        System.out.println("Server is waiting for connection...");
+        System.out.println("com.zur.server.Server is waiting for connection...");
     }
 
     private void connectToClientSocket(ServerSocket serverSocket) throws IOException {
@@ -32,7 +34,7 @@ public class Server {
     }
 
     private void serverError(IOException e) {
-        System.out.println("Error in Server: " + e.getMessage());
+        System.out.println("Error in com.zur.server.Server: " + e.getMessage());
     }
 
     class ServerHandler implements Runnable {
